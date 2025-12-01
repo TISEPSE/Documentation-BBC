@@ -1,57 +1,67 @@
+# Nom du workflow GitHub Actions
 name: Deploy MkDocs to GitHub Pages
 
+# Déclencheurs du workflow
 on:
   push:
     branches:
-      - main
-  workflow_dispatch:
+      - main  # Se déclenche sur push vers la branche main
+  workflow_dispatch:  # Permet un lancement manuel depuis GitHub
 
+# Permissions nécessaires
 permissions:
-  contents: write
-  pages: write
-  id-token: write
+  contents: write  # Écrire dans le repository
+  pages: write     # Déployer sur GitHub Pages
+  id-token: write  # Authentification
 
+# Jobs (étapes du workflow)
 jobs:
+  # Job 1 : Construction du site
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest  # Environnement Ubuntu
     
     steps:
+      # Étape 1 : Récupérer le code
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 0  # Récupère tout l'historique
           
+      # Étape 2 : Configurer GitHub Pages
       - name: Setup Pages
         uses: actions/configure-pages@v4
         
+      # Étape 3 : Installer Python
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.11'
+          python-version: '3.11'  # Version Python
           
+      # Étape 4 : Installer les dépendances
       - name: Install dependencies
         run: |
-          pip install mkdocs
-          # Ajoute ton thème ici (exemple avec material)
-          pip install mkdocs-material
+          pip install mkdocs  # Installer MkDocs
+          pip install mkdocs-material  # Installer le thème Material
           
+      # Étape 5 : Générer le site statique
       - name: Build with MkDocs
-        run: mkdocs build
-        # Si ton fichier de config a un autre nom :
-        # run: mkdocs build --config-file mon-config.yml
+        run: mkdocs build  # Génère le site dans le dossier ./site
         
+      # Étape 6 : Préparer pour le déploiement
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: ./site
+          path: ./site  # Dossier contenant le site généré
 
+  # Job 2 : Déploiement sur GitHub Pages
   deploy:
     environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+      name: github-pages  # Environnement GitHub Pages
+      url: ${{ steps.deployment.outputs.page_url }}  # URL du site
     runs-on: ubuntu-latest
-    needs: build
+    needs: build  # Attends que le job 'build' termine
     steps:
+      # Étape unique : Déployer
       - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+        id: deployment  # Identifiant pour récupérer l'URL
+        uses: actions/deploy-pages@v4  # Action de déploiement

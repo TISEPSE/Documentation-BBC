@@ -1,44 +1,46 @@
+# Nom du site
 site_name: Documentation BBC
+
+# URL de production (GitHub Pages)
 site_url: https://tisepse.github.io/Book-By-Click
 
+# Configuration du thème Material
 theme:
-  name: material
-  features:
-    - navigation.tabs
-    - navigation.sections
-    - navigation.expand
-    - search.highlight
+  name: material  # Utilise le thème MkDocs Material
   
+  # Fonctionnalités activées
+  features:
+    - navigation.tabs        # Navigation en onglets en haut
+    - navigation.expand      # Permet d'étendre/réduire les sections
+    - search.highlight       # Surligne les termes recherchés
+  
+  # Configuration des palettes de couleurs (thèmes)
   palette:
-    # Premier thème (sera celui par défaut)
-    - scheme: slate 
-      toggle:
-        icon: material/brightness-4 
-        name: Mode sombre
-      primary: indigo
-      accent: blue
+    # Premier thème : mode sombre
+    - scheme: slate          # Thème sombre prédéfini
+      primary: indigo        # Couleur principale
+      accent: blue           # Couleur d'accentuation
+      toggle:                # Configuration du bouton de bascule
+        icon: material/brightness-4  # Icône de lune 🌙
+        name: Mode sombre    # Texte au survol
     
-    # Deuxième thème
-    - scheme: default  # Mode clair
+    # Deuxième thème : mode clair  
+    - scheme: default        # Thème clair par défaut
+      primary: indigo        # Même couleur primaire
+      accent: blue           # Même couleur d'accent
       toggle:
-        icon: material/brightness-7 
-        name: Mode clair
-      primary: indigo
-      accent: blue
+        icon: material/brightness-7  # Icône de soleil ☀️
+        name: Mode clair     # Texte au survol
 
+# Liens vers le repository GitHub
 repo_url: https://github.com/TISEPSE/Book-By-Click
-repo_name: Book-By-Click
+repo_name: Book-By-Click  # Texte affiché pour le lien
 
+# Structure de navigation
 nav:
-  - Accueil: index.md
-  - À propos: about.md
+  - Accueil: index.md      # Page d'accueil → docs/index.md
+  - À propos: about.md     # Page "À propos" → docs/about.md
 
+# Plugins activés
 plugins:
-  - search
-
-# Ajoutez ceci pour personnaliser le comportement du toggle
-extra:
-  consent:
-    title: Préférences de thème
-    description: |
-      Choisissez votre thème préféré. Vous pourrez le changer à tout moment.
+  - search  # Active la recherche en temps réel
