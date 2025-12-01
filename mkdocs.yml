@@ -1,0 +1,23 @@
+site_name: Documentation BBC
+site_url: https://github.com/TISEPSE/Book-By-Click
+
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - search.highlight
+  palette:
+    primary: indigo
+    accent: blue
+
+repo_url: https://github.com/TISEPSE/Book-By-Click
+repo_name: Book-By-Click
+
+nav:
+  - Accueil: index.md
+  - À propos: about.md
+
+plugins:
+  - search

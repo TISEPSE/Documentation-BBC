@@ -1,0 +1,43 @@
+name: Deploy MkDocs
+
+on:
+  push:
+    branches:
+      - main
+      - master
+  workflow_dispatch:  # Permet de déclencher le déploiement manuellement
+
+permissions:
+  contents: write
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+          
+      - name: Install dependencies
+        run: |
+          pip install mkdocs
+          pip install mkdocs-material  # Optionnel : pour le thème Material
+          # Ajoute ici d'autres extensions si nécessaire
+          # pip install mkdocs-awesome-pages-plugin
+          # pip install mkdocs-minify-plugin
+          
+      - name: Build site
+        run: mkdocs build
+        # ou avec un fichier de configuration personnalisé :
+        # run: mkdocs build --config-file mkdocs.yml
+        
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./site
