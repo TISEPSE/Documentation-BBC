@@ -1,5 +1,5 @@
 site_name: Documentation BBC
-site_url: https://github.com/TISEPSE/Book-By-Click
+site_url: https://tisepse.github.io/Book-By-Click
 
 theme:
   name: material
@@ -8,9 +8,23 @@ theme:
     - navigation.sections
     - navigation.expand
     - search.highlight
+  
   palette:
-    primary: indigo
-    accent: blue
+    # Premier thème (sera celui par défaut)
+    - scheme: slate 
+      toggle:
+        icon: material/brightness-4 
+        name: Mode sombre
+      primary: indigo
+      accent: blue
+    
+    # Deuxième thème
+    - scheme: default  # Mode clair
+      toggle:
+        icon: material/brightness-7 
+        name: Mode clair
+      primary: indigo
+      accent: blue
 
 repo_url: https://github.com/TISEPSE/Book-By-Click
 repo_name: Book-By-Click
@@ -21,3 +35,10 @@ nav:
 
 plugins:
   - search
+
+# Ajoutez ceci pour personnaliser le comportement du toggle
+extra:
+  consent:
+    title: Préférences de thème
+    description: |
+      Choisissez votre thème préféré. Vous pourrez le changer à tout moment.
