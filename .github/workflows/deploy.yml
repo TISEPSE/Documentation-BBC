@@ -42,6 +42,7 @@ jobs:
         run: |
           pip install mkdocs  # Installer MkDocs
           pip install mkdocs-material  # Installer le thème Material
+          pip install pymdown-extensions  # Extensions pour coloration syntaxique et Mermaid
           
       # Étape 5 : Générer le site statique
       - name: Build with MkDocs

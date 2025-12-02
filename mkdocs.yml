@@ -13,6 +13,8 @@ theme:
     - navigation.tabs        # Navigation en onglets en haut
     - navigation.expand      # Permet d'étendre/réduire les sections
     - search.highlight       # Surligne les termes recherchés
+    - content.code.copy      # Bouton copier pour les blocs de code
+    - content.code.annotate  # Annotations dans le code
   
   # Configuration des palettes de couleurs (thèmes)
   palette:
@@ -38,9 +40,34 @@ repo_name: Book-By-Click  # Texte affiché pour le lien
 
 # Structure de navigation
 nav:
-  - Accueil: index.md      # Page d'accueil → docs/index.md
-  - À propos: about.md     # Page "À propos" → docs/about.md
+  - Accueil: index.md
+  - Installation: installation.md
+  - Guide Utilisateur:
+      - Étudiants: guide/student.md
+      - Entreprises: guide/entreprise.md
+  - Architecture:
+      - Vue d'ensemble: architecture/overview.md
+      - Frontend: architecture/frontend.md
+      - Backend: architecture/backend.md
+      - Base de données: architecture/database.md
+  - Développement:
+      - Démarrage: development/getting-started.md
+      - Structure du projet: development/structure.md
+      - Contribuer: development/contributing.md
+  - API:
+      - Endpoints: api/endpoints.md
 
 # Plugins activés
 plugins:
   - search  # Active la recherche en temps réel
+
+# Extensions Markdown pour la coloration syntaxique
+markdown_extensions:
+  - pymdownx.highlight:      # Coloration syntaxique
+      anchor_linenums: true  # Liens vers les numéros de ligne
+  - pymdownx.superfences:    # Blocs de code avancés
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.inlinehilite    # Coloration inline
