@@ -56,6 +56,9 @@ nav:
       - Contribuer: development/contributing.md
   - API:
       - Endpoints: api/endpoints.md
+  - Dossier Technique:
+      - Référentiel BTS: dossier-technique/referentiel.md
+      - Dossier Technique BTS: dossier-technique/Dossier-Technique-BTS.md
 
 # Plugins activés
 plugins:
