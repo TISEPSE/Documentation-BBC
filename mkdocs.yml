@@ -50,12 +50,16 @@ nav:
       - Frontend: architecture/frontend.md
       - Backend: architecture/backend.md
       - Base de données: architecture/database.md
+  - API:
+      - Référence API: api/endpoints.md
+      - Guide d'authentification: api/authentication.md
+      - Exemples d'utilisation: api/examples.md
   - Développement:
       - Démarrage: development/getting-started.md
       - Structure du projet: development/structure.md
       - Contribuer: development/contributing.md
-  - API:
-      - Endpoints: api/endpoints.md
+  - Déploiement: deployment.md
+  - FAQ & Dépannage: faq.md
   - Dossier Technique:
       - Référentiel BTS: dossier-technique/referentiel.md
       - Dossier Technique BTS: dossier-technique/Dossier-Technique-BTS.md

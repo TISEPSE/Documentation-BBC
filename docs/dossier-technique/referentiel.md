@@ -1,9 +1,7 @@
-## 📄 Document à télécharger
+# Référentiel BTS
 
-Tu peux récupérer le fichier ici :
+Cette section est réservée pour le référentiel BTS du projet.
 
-👉 **[Télécharger le document](dossier-technique/Annex-BTS.docx)**
+## À venir
 
-Bonne lecture !
-
-[Consulter le document PDF](dossier-technique/Annex-BTS.pdf)
+Le référentiel sera ajouté ultérieurement selon les besoins du projet.
