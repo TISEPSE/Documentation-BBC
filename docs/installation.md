@@ -1,194 +1,140 @@
 # Guide d'installation
 
-Ce guide vous accompagne dans l'installation du système de réservation sur votre machine.
+Guide d'installation complet de Book By Click.
+
+**Projet GitHub :** [https://github.com/TISEPSE/Book-By-Click.git](https://github.com/TISEPSE/Book-By-Click.git)
 
 ## Prérequis
 
-Avant de commencer, assurez-vous d'avoir :
-
-- [x] **Node.js** 18.x ou supérieur
-- [x] **Python** 3.8 ou supérieur
-- [x] **Git** pour cloner le repository
-- [x] **Docker** (optionnel, pour la base de données)
-
-### Vérifier les installations
+- **Node.js** 18+
+- **Python** 3.8+
+- **Git**
+- **Docker** (recommandé pour PostgreSQL)
 
 ```bash
-node --version  # v18.0.0 ou supérieur
-python --version  # Python 3.8 ou supérieur
+# Vérifier les versions
+node --version
+python --version
 git --version
-docker --version  # (optionnel)
+docker --version
 ```
 
 ## Installation
 
-### 1. Cloner le repository
+### 1. Cloner le projet
 
 ```bash
-git clone <url-du-repository>
-cd Projet-BTS-Alan-Maxime-Tisba
+git clone https://github.com/TISEPSE/Book-By-Click.git
+cd Book-By-Click
 ```
 
-### 2. Installation du Frontend
+### 2. Frontend
 
 ```bash
-# Installer les dépendances
 npm install
 ```
 
-#### Dépendances installées
+**Dépendances principales :**
+- React 19.2.0
+- Vite (rolldown-vite 7.2.5)
+- Tailwind CSS 4.1.17
+- React Router DOM 7.10.1
 
-- `react` & `react-dom` (v19.2.0)
-- `react-router-dom` (v7.9.6)
-- `tailwindcss` (v4.1.17)
-- `vite` (rolldown-vite v7.2.5)
-- `@heroicons/react` (v2.2.0)
-
-### 3. Installation du Backend
+### 3. Backend
 
 ```bash
 cd Backend
-
-# Créer un environnement virtuel Python
 python -m venv ../venv
-
-# Activer l'environnement virtuel
 source ../venv/bin/activate  # Linux/Mac
-# ou
-..\venv\Scripts\activate  # Windows
+# ou ..\venv\Scripts\activate  # Windows
 
-# Installer les dépendances
-pip install flask flask-cors mysql-connector-python python-dotenv
+pip install flask flask-sqlalchemy flask-cors psycopg2-binary python-dotenv
 ```
 
-### 4. Configuration de la base de données
+### 4. Base de données PostgreSQL
 
-#### Option A : Avec Docker (Recommandé)
+#### Avec Docker (recommandé)
 
 ```bash
-cd Backend/db
-docker-compose up -d
+cd Backend/src
+docker compose up -d
 ```
 
-Le fichier `docker-compose.yml` configure automatiquement MySQL.
+Configuration automatique :
+- PostgreSQL 15
+- User: `appuser`
+- Password: `apppassword`
+- Database: `appdb`
+- Port: 5432
 
-#### Option B : Installation manuelle MySQL
+#### Sans Docker
 
 ```bash
 # Ubuntu/Debian
-sudo apt install mysql-server
+sudo apt install postgresql-15
 
-# macOS avec Homebrew
-brew install mysql
+# macOS
+brew install postgresql@15
 
-# Démarrer MySQL
-sudo service mysql start  # Linux
-brew services start mysql  # macOS
+# Créer la base
+sudo -u postgres psql
+CREATE DATABASE appdb;
+CREATE USER appuser WITH PASSWORD 'apppassword';
+GRANT ALL PRIVILEGES ON DATABASE appdb TO appuser;
+\q
 ```
 
-Créez la base de données :
+### 5. Configuration
 
-```sql
-CREATE DATABASE reservations_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-CREATE USER 'reserv_user'@'localhost' IDENTIFIED BY 'votre_mot_de_passe';
-GRANT ALL PRIVILEGES ON reservations_db.* TO 'reserv_user'@'localhost';
-FLUSH PRIVILEGES;
-```
-
-### 5. Configuration de l'environnement
-
-#### Backend (.env)
-
-Créez un fichier `.env` dans le dossier `Backend/` :
-
-```env
-FLASK_APP=app.py
-FLASK_ENV=development
-DATABASE_URL=mysql://reserv_user:votre_mot_de_passe@localhost/reservations_db
-SECRET_KEY=votre_cle_secrete_aleatoire
-```
-
-#### Frontend (optionnel)
-
-Si nécessaire, créez un fichier `.env` à la racine :
-
-```env
-VITE_API_URL=http://localhost:5000
-```
-
-## Lancement de l'application
-
-### Développement
-
-Plusieurs options selon votre environnement :
-
-=== "Linux/Mac"
-    ```bash
-    npm run dev:lin
-    ```
-
-    Cette commande lance :
-    - Le backend Flask sur le port 5000
-    - Le frontend Vite sur le port 5173
-
-=== "Windows"
-    ```bash
-    npm run dev:win
-    ```
-
-    Version Windows de la commande ci-dessus
-
-=== "Avec Docker complet"
-    ```bash
-    npm run dev:all
-    ```
-
-    Lance Docker + Backend + Frontend
-
-### Lancement séparé
-
-Si vous préférez lancer les services séparément :
+La configuration par défaut fonctionne avec Docker. Pour personnaliser, créez un fichier `.env` :
 
 ```bash
-# Terminal 1 - Backend
-cd Backend
-source ../venv/bin/activate
-python -m flask --app app run --no-debugger
+# Backend/src/.env
+SQLALCHEMY_DATABASE_URI=postgresql://appuser:apppassword@localhost:5432/appdb
+```
 
-# Terminal 2 - Frontend
-npm run dev
+## Lancement
+
+```bash
+# Linux/Mac
+npm run dev:lin
+
+# Windows
+npm run dev:win
+
+# Avec Docker (lance automatiquement la base de données)
+npm run dev:all
+```
+
+**Services lancés :**
+- Frontend : http://localhost:5173
+- Backend : http://localhost:5000
+
+### Commandes séparées
+
+```bash
+# Base de données seulement
+npm run db
+
+# Backend seulement
+npm run api          # Linux/Mac
+npm run api:win      # Windows
+
+# Frontend seulement
+npm run web
 ```
 
 ## Vérification
 
-### Frontend
-
-Ouvrez http://localhost:5173 dans votre navigateur.
-
-Vous devriez voir la page d'accueil de l'application.
-
-### Backend
-
-Testez l'API :
+### Test API
 
 ```bash
-curl http://localhost:5000/api/health
-```
-
-Réponse attendue :
-
-```json
-{
-  "status": "ok",
-  "message": "API is running"
-}
+curl http://localhost:5000/api/services
 ```
 
 ## Troubleshooting
 
 ### Port déjà utilisé
-
-Si le port 5173 ou 5000 est déjà utilisé :
 
 ```bash
 # Trouver le processus
@@ -199,78 +145,38 @@ netstat -ano | findstr :5173  # Windows
 kill -9 <PID>
 ```
 
-Ou changez le port dans `vite.config.js` :
+### Erreur de connexion PostgreSQL
 
-```javascript
-export default {
-  server: {
-    port: 3000  // Nouveau port
-  }
-}
+```bash
+# Vérifier que Docker est lancé
+docker ps
+
+# Vérifier les logs
+docker logs db
+
+# Redémarrer PostgreSQL
+cd Backend/src
+docker compose restart db
 ```
 
-### Erreur de connexion à la base de données
-
-1. Vérifiez que MySQL est démarré :
-   ```bash
-   sudo service mysql status  # Linux
-   brew services list  # macOS
-   ```
-
-2. Vérifiez les identifiants dans `.env`
-
-3. Testez la connexion :
-   ```bash
-   mysql -u reserv_user -p reservations_db
-   ```
-
-### Erreur "Module not found"
+### Erreur de dépendances
 
 ```bash
 # Frontend
 npm install
 
 # Backend
-pip install -r requirements.txt
+source venv/bin/activate
+pip install flask flask-sqlalchemy flask-cors psycopg2-binary python-dotenv
 ```
 
-### Docker ne démarre pas
+## Production
 
 ```bash
-# Vérifier que Docker est démarré
-docker ps
-
-# Relancer Docker Desktop (macOS/Windows)
-# ou
-sudo service docker start  # Linux
-
-# Reconstruire les conteneurs
-cd Backend/db
-docker-compose down
-docker-compose up -d --build
-```
-
-## Build de production
-
-### Frontend
-
-```bash
+# Build frontend
 npm run build
-```
 
-Les fichiers optimisés seront dans le dossier `dist/`.
-
-### Backend
-
-Pour la production, utilisez un serveur WSGI comme Gunicorn :
-
-```bash
+# Backend avec Gunicorn
 pip install gunicorn
 gunicorn -w 4 -b 0.0.0.0:5000 app:app
 ```
-
-## Prochaines étapes
-
-- Consultez l'[Architecture](architecture/overview.md) pour comprendre le système
-- Lisez le [Guide de développement](development/getting-started.md)
-- Explorez l'[API](api/endpoints.md)

@@ -2,6 +2,8 @@
 
 Documentation complète de l'API REST du système de réservation Book By Click.
 
+**Projet GitHub :** [https://github.com/TISEPSE/Book-By-Click.git](https://github.com/TISEPSE/Book-By-Click.git)
+
 ## URL de base
 
 **Développement:**
@@ -18,6 +20,19 @@ https://api.book-by-click.example.com
 
 - **Content-Type:** `application/x-www-form-urlencoded` ou `application/json` selon l'endpoint
 - **Charset:** UTF-8
+
+## Liste des endpoints disponibles
+
+| Méthode | Endpoint | Description | Content-Type |
+|---------|----------|-------------|--------------|
+| POST | `/register_form` | Inscription utilisateur | form-data |
+| POST | `/login_form` | Connexion utilisateur | form-data |
+| POST | `/teste` | Récupérer un utilisateur par nom | form-data |
+| POST | `/contact` | Envoyer un message de contact | JSON |
+| GET | `/api/services` | Autocomplétion des services | - |
+| GET | `/api/villes` | Autocomplétion des villes de France | - |
+
+---
 
 ## Endpoints
 
@@ -37,25 +52,12 @@ Inscription d'un nouvel utilisateur.
 | `password` | string | Oui | Mot de passe |
 | `nom` | string | Oui | Nom de famille |
 
-**Exemple avec cURL:**
+**Exemple:**
 ```bash
 curl -X POST http://localhost:5000/register_form \
   -d "email=utilisateur@example.com" \
   -d "password=motdepasse123" \
   -d "nom=Dupont"
-```
-
-**Exemple avec JavaScript (Fetch):**
-```javascript
-const formData = new FormData();
-formData.append('email', 'utilisateur@example.com');
-formData.append('password', 'motdepasse123');
-formData.append('nom', 'Dupont');
-
-fetch('http://localhost:5000/register_form', {
-  method: 'POST',
-  body: formData
-})
 ```
 
 **Réponse:** `200 OK`
@@ -78,26 +80,11 @@ Connexion d'un utilisateur existant.
 | `email` | string | Oui | Adresse email du compte |
 | `password` | string | Oui | Mot de passe |
 
-**Exemple avec cURL:**
+**Exemple:**
 ```bash
 curl -X POST http://localhost:5000/login_form \
   -d "email=utilisateur@example.com" \
   -d "password=motdepasse123"
-```
-
-**Exemple avec JavaScript:**
-```javascript
-const formData = new FormData();
-formData.append('email', 'utilisateur@example.com');
-formData.append('password', 'motdepasse123');
-
-const response = await fetch('http://localhost:5000/login_form', {
-  method: 'POST',
-  body: formData
-});
-
-const data = await response.json();
-console.log(data);
 ```
 
 **Réponse:** `200 OK`
@@ -127,7 +114,7 @@ Récupérer les informations d'un utilisateur par son nom.
 |-----------|------|--------|-------------|
 | `username` | string | Oui | Nom de l'utilisateur à rechercher |
 
-**Exemple avec cURL:**
+**Exemple:**
 ```bash
 curl -X POST http://localhost:5000/teste \
   -d "username=Dupont"
@@ -172,7 +159,7 @@ Envoyer un message de contact par email.
 | `phone` | string | Non | Numéro de téléphone (optionnel) |
 | `message` | string | Oui | Message à envoyer |
 
-**Exemple avec cURL:**
+**Exemple:**
 ```bash
 curl -X POST http://localhost:5000/contact \
   -H "Content-Type: application/json" \
@@ -182,24 +169,6 @@ curl -X POST http://localhost:5000/contact \
     "phone": "0612345678",
     "message": "Je souhaite obtenir plus d'\''informations sur vos services."
   }'
-```
-
-**Exemple avec JavaScript:**
-```javascript
-fetch('http://localhost:5000/contact', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json'
-  },
-  body: JSON.stringify({
-    name: 'Jean Dupont',
-    email: 'jean.dupont@example.com',
-    phone: '0612345678',
-    message: 'Je souhaite obtenir plus d\'informations sur vos services.'
-  })
-})
-.then(response => response.json())
-.then(data => console.log(data));
 ```
 
 **Réponse:** `200 OK`
@@ -240,27 +209,13 @@ Récupérer la liste des services disponibles avec autocomplétion.
 |-----------|------|--------|-------------|
 | `q` | string | Non | Terme de recherche pour filtrer les services |
 
-**Exemple sans filtre:**
+**Exemples:**
 ```bash
+# Sans filtre
 curl http://localhost:5000/api/services
-```
 
-**Exemple avec recherche:**
-```bash
+# Avec recherche
 curl "http://localhost:5000/api/services?q=dev"
-```
-
-**Exemple avec JavaScript:**
-```javascript
-// Sans filtre
-fetch('http://localhost:5000/api/services')
-  .then(response => response.json())
-  .then(data => console.log(data));
-
-// Avec recherche
-fetch('http://localhost:5000/api/services?q=dev')
-  .then(response => response.json())
-  .then(data => console.log(data));
 ```
 
 **Réponse:** `200 OK`
@@ -288,38 +243,16 @@ Récupérer la liste des villes de France avec autocomplétion.
 |-----------|------|--------|-------------|
 | `q` | string | Non | Terme de recherche pour filtrer les villes |
 
-**Exemple sans filtre:**
+**Exemples:**
 ```bash
+# Sans filtre (100 premières villes)
 curl http://localhost:5000/api/villes
-```
 
-**Exemple avec recherche:**
-```bash
+# Avec recherche (max 15 résultats)
 curl "http://localhost:5000/api/villes?q=par"
 ```
 
-**Exemple avec JavaScript:**
-```javascript
-// Recherche dynamique (debounced)
-let timeout;
-const searchInput = document.getElementById('ville');
-
-searchInput.addEventListener('input', (e) => {
-  clearTimeout(timeout);
-  timeout = setTimeout(() => {
-    const query = e.target.value;
-
-    fetch(`http://localhost:5000/api/villes?q=${query}`)
-      .then(response => response.json())
-      .then(villes => {
-        // Afficher les suggestions
-        console.log(villes);
-      });
-  }, 300);
-});
-```
-
-**Réponse sans filtre:** `200 OK` (100 premières villes)
+**Réponse sans filtre:** `200 OK`
 ```json
 [
   "Paris",
@@ -361,17 +294,6 @@ Selon le modèle de base de données (voir [Base de données](../architecture/da
 - `prestation`: Services offerts par les entreprises
 
 ---
-
-## Résumé des endpoints
-
-| Méthode | Endpoint | Description | Auth |
-|---------|----------|-------------|------|
-| POST | `/register_form` | Inscription utilisateur | Non |
-| POST | `/login_form` | Connexion utilisateur | Non |
-| POST | `/teste` | Récupérer un utilisateur par nom | Non |
-| POST | `/contact` | Envoyer un message de contact | Non |
-| GET | `/api/services` | Autocomplétion des services | Non |
-| GET | `/api/villes` | Autocomplétion des villes de France | Non |
 
 ## Notes techniques
 

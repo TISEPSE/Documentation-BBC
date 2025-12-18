@@ -1,68 +1,21 @@
-# Système de Réservation
+# Book By Click
 
-Bienvenue dans la documentation du **Système de Réservation** pour entreprises et établissements scolaires.
+**Book By Click** est un système de réservation en ligne permettant aux clients de prendre rendez-vous avec des entreprises partenaires.
 
-## Vue d'ensemble
+**Projet GitHub :** [https://github.com/TISEPSE/Book-By-Click.git](https://github.com/TISEPSE/Book-By-Click.git)
 
-Cette application permet aux étudiants de prendre rendez-vous avec des entreprises partenaires pour des entretiens, stages ou opportunités professionnelles.
+## Technologies
 
-### Technologies
+- **Frontend** : React 19, Vite, Tailwind CSS 4, React Router 7
+- **Backend** : Flask, PostgreSQL 15, SQLAlchemy
+- **Infrastructure** : Docker, Docker Compose
 
-=== "Frontend"
-    - **React 19** - Framework JavaScript
-    - **Vite** - Build tool moderne
-    - **Tailwind CSS 4** - Framework CSS
-    - **React Router 7** - Gestion des routes
-
-=== "Backend"
-    - **Flask** - Framework Python
-    - **MySQL** - Base de données
-    - **Docker** - Conteneurisation
-
-## Fonctionnalités principales
-
-!!! success "Pour les étudiants"
-    - Création de compte
-    - Navigation des entreprises partenaires
-    - Réservation de créneaux horaires
-    - Gestion des rendez-vous
-    - Notifications
-
-!!! info "Pour les entreprises"
-    - Dashboard de gestion
-    - Calendrier des réservations
-    - Gestion des clients
-    - Statistiques
-    - Configuration des disponibilités
-
-## Architecture
-
-```mermaid
-graph TB
-    A[Client React] -->|HTTPS| B[Backend Flask]
-    B -->|SQL| C[(MySQL Database)]
-    D[Docker] -.->|Container| C
-
-    style A fill:#61dafb
-    style B fill:#000
-    style C fill:#4479a1
-    style D fill:#2496ed
-```
-
-## Démarrage rapide
-
-### Prérequis
-
-- Node.js 18+
-- Python 3.8+
-- Docker (optionnel pour la base de données)
-
-### Installation
+## Installation
 
 ```bash
 # Cloner le projet
-git clone <repository>
-cd Projet-BTS-Alan-Maxime-Tisba
+git clone https://github.com/TISEPSE/Book-By-Click.git
+cd Book-By-Click
 
 # Installer les dépendances frontend
 npm install
@@ -71,50 +24,22 @@ npm install
 cd Backend
 python -m venv ../venv
 source ../venv/bin/activate  # Linux/Mac
-# ou ../venv/Scripts/activate  # Windows
 pip install -r requirements.txt
+
+# Lancer l'application
+cd ..
+npm run dev:lin  # Linux/Mac
+# ou npm run dev:win  # Windows
 ```
 
-### Lancement
+**URLs :**
+- Frontend : http://localhost:5173
+- Backend : http://localhost:5000
 
-=== "Linux/Mac"
-    ```bash
-    npm run dev:lin
-    ```
+## Documentation
 
-=== "Windows"
-    ```bash
-    npm run dev:win
-    ```
-
-=== "Avec Docker"
-    ```bash
-    npm run dev:all
-    ```
-
-L'application sera accessible sur :
-
-- **Frontend** : http://localhost:5173
-- **Backend** : http://localhost:5000
-
-## Structure de la documentation
-
-| Section | Description |
-|---------|-------------|
-| [Installation](installation.md) | Guide d'installation détaillé |
-| [Architecture](architecture/overview.md) | Architecture technique du système |
-| [API](api/endpoints.md) | Référence des endpoints API |
-| [Développement](development/getting-started.md) | Documentation pour développeurs |
-| [Déploiement](deployment.md) | Guide de déploiement en production |
-
-## Support
-
-Pour toute question ou problème :
-
-- Consultez la documentation
-- Ouvrez une issue sur GitHub
-- Contactez l'équipe de développement
-
----
-
-*Documentation générée avec MkDocs Material*
+- **[Installation](installation.md)** - Guide d'installation complet
+- **[API](api/endpoints.md)** - Endpoints et exemples
+- **[Architecture](architecture/overview.md)** - Structure technique du projet
+- **[Développement](development/getting-started.md)** - Guide pour développeurs
+- **[Déploiement](deployment.md)** - Mise en production
