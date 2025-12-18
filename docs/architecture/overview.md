@@ -1,41 +1,24 @@
 # Architecture - Vue d'ensemble
 
-## Introduction
-
-Le système de réservation est une application web full-stack composée d'un frontend React et d'un backend Flask, avec une base de données MySQL.
+**Projet GitHub :** [https://github.com/TISEPSE/Book-By-Click.git](https://github.com/TISEPSE/Book-By-Click.git)
 
 ## Schéma global
 
 ```mermaid
 graph TB
-    subgraph "Client"
-        A[Navigateur Web]
-    end
+    A[Navigateur] -->|HTTP| B[React App<br/>Port 5173]
+    B -->|API Calls| C[Flask API<br/>Port 5000]
+    C -->|SQL| D[(PostgreSQL 15<br/>Port 5432)]
+    C -->|SMTP| E[Mail Server<br/>Port 25]
 
-    subgraph "Frontend"
-        B[React App<br/>Port 5173]
-        C[Vite Dev Server]
-    end
-
-    subgraph "Backend"
-        D[Flask API<br/>Port 5000]
-        E[Routes & Controllers]
-    end
-
-    subgraph "Data"
-        F[(MySQL<br/>Database)]
-        G[Docker Container]
-    end
-
-    A -->|HTTP| B
-    B -->|API Calls| D
-    D -->|SQL| F
-    G -.->|Contains| F
+    F[Docker] -.->|Container| D
+    F -.->|Container| E
 
     style A fill:#e1f5ff
     style B fill:#61dafb
-    style D fill:#000
-    style F fill:#4479a1
+    style C fill:#000
+    style D fill:#4479a1
+    style E fill:#10b981
 ```
 
 ## Stack technologique
@@ -45,18 +28,20 @@ graph TB
 | Technologie | Version | Rôle |
 |-------------|---------|------|
 | React | 19.2.0 | Framework UI |
-| Vite | 7.2.5 | Build tool & dev server |
-| React Router | 7.9.6 | Routing |
-| Tailwind CSS | 4.1.17 | Framework CSS |
-| Heroicons | 2.2.0 | Bibliothèque d'icônes |
+| Vite | 7.2.5 (rolldown) | Build tool |
+| React Router | 7.10.1 | Routing |
+| Tailwind CSS | 4.1.17 | Styling |
+| Recharts | 3.5.1 | Graphiques |
+| date-fns | 4.1.0 | Dates |
 
 ### Backend
 
 | Technologie | Version | Rôle |
 |-------------|---------|------|
-| Flask | 0.2.10 | Framework web Python |
-| MySQL | 8.0+ | Base de données |
-| Docker | Latest | Conteneurisation |
+| Flask | Latest | Framework web |
+| SQLAlchemy | Latest | ORM |
+| PostgreSQL | 15 | Base de données |
+| Docker Compose | Latest | Orchestration |
 
 ## Architecture en couches
 
@@ -92,177 +77,63 @@ Backend/
 
 ### 3. Données
 
-- **MySQL** pour le stockage persistant
-- **Tables principales** :
-  - `users` - Utilisateurs (étudiants, entreprises)
-  - `companies` - Entreprises partenaires
-  - `reservations` - Réservations
-  - `timeslots` - Créneaux horaires
+**PostgreSQL 15** avec 9 tables :
 
-## Flux de données
-
-### Authentification
-
-```mermaid
-sequenceDiagram
-    participant U as User
-    participant F as Frontend
-    participant B as Backend
-    participant DB as Database
-
-    U->>F: Soumet formulaire login
-    F->>B: POST /api/auth/login
-    B->>DB: Vérifie credentials
-    DB-->>B: User data
-    B-->>F: Token JWT + User info
-    F->>F: Stocke token (localStorage)
-    F-->>U: Redirige vers dashboard
-```
-
-### Création de réservation
-
-```mermaid
-sequenceDiagram
-    participant U as User
-    participant F as Frontend
-    participant B as Backend
-    participant DB as Database
-
-    U->>F: Sélectionne créneau
-    F->>B: GET /api/timeslots/available
-    B->>DB: Query slots disponibles
-    DB-->>B: Liste slots
-    B-->>F: Slots JSON
-    F-->>U: Affiche calendrier
-
-    U->>F: Confirme réservation
-    F->>B: POST /api/reservations
-    B->>DB: INSERT reservation
-    DB-->>B: Confirmation
-    B-->>F: Success response
-    F-->>U: Affiche confirmation
-```
+- `typeutilisateur` - Types d'utilisateurs
+- `utilisateur` - Utilisateurs (clients et pros)
+- `entreprise` - Entreprises
+- `prestation` - Services offerts
+- `creneau` - Créneaux horaires
+- `reservation` - Réservations
+- `evenement` - Événements
+- `semainetype` - Semaines types
+- `eventemail` - Événements email
 
 ## Communication Frontend-Backend
 
-### API REST
+**API REST** : `http://localhost:5000`
 
-Le frontend communique avec le backend via une API REST.
+**Format** : JSON et form-data selon les endpoints
 
-**Base URL** : `http://localhost:5000/api`
+**6 endpoints disponibles** :
+- POST `/register_form` - Inscription
+- POST `/login_form` - Connexion
+- POST `/teste` - Récupérer utilisateur
+- POST `/contact` - Formulaire contact
+- GET `/api/services` - Autocomplétion services
+- GET `/api/villes` - Autocomplétion villes
 
-**Format** : JSON
-
-**Authentification** : JWT Bearer Token
-
-Exemple de requête :
-
-```javascript
-fetch('http://localhost:5000/api/reservations', {
-  method: 'GET',
-  headers: {
-    'Content-Type': 'application/json',
-    'Authorization': `Bearer ${token}`
-  }
-})
-```
+Voir la [documentation API](../api/endpoints.md) complète.
 
 ## Gestion de l'état
 
-### Frontend
+**Frontend :**
+- React Hooks (useState, useEffect)
+- Custom Hook useCalendar pour le calendrier
+- État local des composants
 
-- **React Hooks** (useState, useEffect)
-- **Custom Hook** `useForm` pour les formulaires
-- **Context API** (potentiel) pour l'état global
-- **localStorage** pour la persistance du token
+**Backend :**
+- SQLAlchemy ORM
+- Factory pattern (`create_app()`)
+- Single blueprint architecture
 
-### Backend
+## Services Docker
 
-- **Session-based** (Flask sessions)
-- **Stateless API** avec JWT
+**PostgreSQL** (port 5432) :
+- Image: postgres:15
+- User: appuser
+- Database: appdb
 
-## Sécurité
+**SMTP** (port 25) :
+- Relay: smtp.gmail.com:587
+- Configuration dans `Backend/src/docker-compose.yml`
 
-### Frontend
-
-- Validation des formulaires
-- Sanitization des entrées
-- Protection XSS
-- HTTPS en production
-
-### Backend
-
-- Hash des mots de passe (bcrypt)
-- JWT pour l'authentification
-- CORS configuré
-- Validation des données
-- Protection CSRF
-- Rate limiting (à implémenter)
-
-## Performance
-
-### Frontend
-
-- **Code splitting** avec React.lazy
-- **Build optimisé** avec Vite
-- **CSS purging** avec Tailwind
-- **Lazy loading** des images
-
-### Backend
-
-- **Connection pooling** MySQL
-- **Caching** (Redis potentiel)
-- **Compression** des réponses
-- **Pagination** des résultats
-
-## Déploiement
-
-### Environnements
+## Environnements
 
 | Env | Frontend | Backend | Database |
 |-----|----------|---------|----------|
-| Dev | localhost:5173 | localhost:5000 | Docker local |
-| Staging | staging.domain.com | api-staging | MySQL staging |
-| Prod | www.domain.com | api.domain.com | MySQL prod |
-
-### Infrastructure
-
-```mermaid
-graph LR
-    A[Users] -->|HTTPS| B[CDN/CloudFlare]
-    B --> C[Nginx]
-    C -->|Static Files| D[React App]
-    C -->|/api/*| E[Flask App]
-    E --> F[(MySQL)]
-
-    style A fill:#e1f5ff
-    style B fill:#fbbf24
-    style C fill:#10b981
-    style D fill:#61dafb
-    style E fill:#000
-    style F fill:#4479a1
-```
-
-## Scalabilité
-
-### Horizontal scaling
-
-- Multiple instances de Flask derrière un load balancer
-- CDN pour les assets statiques
-- Database replication (master-slave)
-
-### Vertical scaling
-
-- Augmentation des ressources serveur
-- Optimisation des requêtes SQL
-- Caching agressif
-
-## Monitoring
-
-- **Frontend** : Google Analytics, Sentry
-- **Backend** : Logs Flask, APM
-- **Database** : MySQL slow query log
-- **Infrastructure** : Uptime monitoring
+| Dev | localhost:5173 | localhost:5000 | Docker PostgreSQL |
+| Prod | Serveur web | Flask + Nginx | PostgreSQL |
 
 ## Prochaines étapes
 

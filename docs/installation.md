@@ -175,8 +175,4 @@ pip install flask flask-sqlalchemy flask-cors psycopg2-binary python-dotenv
 ```bash
 # Build frontend
 npm run build
-
-# Backend avec Gunicorn
-pip install gunicorn
-gunicorn -w 4 -b 0.0.0.0:5000 app:app
 ```

@@ -242,11 +242,10 @@ app.register_blueprint(auth_bp, url_prefix='/api/auth')
 ### Backend
 
 - `flask` - Framework web
+- `flask-sqlalchemy` - ORM
 - `flask-cors` - CORS
-- `mysql-connector-python` - MySQL driver
+- `psycopg2-binary` - PostgreSQL driver
 - `python-dotenv` - Variables d'env
-- `pyjwt` - JWT tokens
-- `werkzeug` - Security utilities
 
 ## Prochaines étapes
 
