@@ -42,9 +42,6 @@ repo_name: Book-By-Click  # Texte affiché pour le lien
 nav:
   - Accueil: index.md
   - Installation: installation.md
-  - Guide Utilisateur:
-      - Étudiants: guide/student.md
-      - Entreprises: guide/entreprise.md
   - Architecture:
       - Vue d'ensemble: architecture/overview.md
       - Frontend: architecture/frontend.md
@@ -59,7 +56,6 @@ nav:
       - Structure du projet: development/structure.md
       - Contribuer: development/contributing.md
   - Déploiement: deployment.md
-  - FAQ & Dépannage: faq.md
   - Dossier Technique:
       - Référentiel BTS: dossier-technique/referentiel.md
       - Dossier Technique BTS: dossier-technique/Dossier-Technique-BTS.md

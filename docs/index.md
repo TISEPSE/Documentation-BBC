@@ -103,9 +103,9 @@ L'application sera accessible sur :
 |---------|-------------|
 | [Installation](installation.md) | Guide d'installation détaillé |
 | [Architecture](architecture/overview.md) | Architecture technique du système |
-| [Guide utilisateur](guide/student.md) | Guides pour étudiants et entreprises |
-| [Développement](development/getting-started.md) | Documentation pour développeurs |
 | [API](api/endpoints.md) | Référence des endpoints API |
+| [Développement](development/getting-started.md) | Documentation pour développeurs |
+| [Déploiement](deployment.md) | Guide de déploiement en production |
 
 ## Support
 
