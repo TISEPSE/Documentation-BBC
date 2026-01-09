@@ -1,7 +1,3 @@
-Voici l'intégralité des livrables pour l'épreuve **E5 du BTS SIO**, rédigés au format **Markdown** et basés sur les données du projet **Book-By-Click (BBC)**.
-
----
-
 # Dossier Projets - Épreuve E5 : Book-By-Click (BBC)
 
 ## 1. Cahier des charges
