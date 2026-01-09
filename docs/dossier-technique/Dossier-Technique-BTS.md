@@ -1,62 +1,74 @@
-# Dossier Projets - Épreuve E5 : Book-By-Click (BBC)
+# ANNEXE 7-1-B : Fiche descriptive de réalisation professionnelle (Option SLAM)
 
-## 1. Cahier des charges
-*   **Organisation support** : Entreprises partenaires souhaitant digitaliser leur prise de rendez-vous.
-*   **Problème métier** : Difficulté de gestion des réservations hors des heures d'ouverture et lourdeur administrative du planning manuel.
-*   **Utilisateurs** : Clients (utilisateurs finaux) et entreprises partenaires (gestionnaires de services).
-*   **Objectifs** : Automatisation de la prise de rendez-vous et centralisation des disponibilités.
-*   **Contraintes techniques** : Utilisation d'une stack moderne incluant **React 19**, **Flask**, et **PostgreSQL 15**.
-*   **Contraintes d'infrastructure** : Conteneurisation obligatoire via **Docker** et **Docker Compose** pour assurer la portabilité.
-*   **Périmètre** : Annuaire des partenaires, affichage des créneaux, système de validation des réservations et authentification.
+## 1. Informations Générales
+*   **Nom, prénom :** [Votre Nom]
+*   **N° candidat :** [Votre Numéro]
+*   **Épreuve :** E5 - Conception et développement d’applications
+*   **Date :** [Date du jour]
+*   **Modalité :** Seul(e) ou En équipe
 
-## 2. Modélisation
-*   **Architecture applicative** : Architecture découplée Client/Serveur.
-    *   **Frontend** : Développé en **React 19** avec **Vite** comme outil de build et **Tailwind CSS 4** pour le stylage.
-    *   **Backend** : API RESTful conçue avec **Flask** (Python).
-    *   **Base de données** : Modèle relationnel sous **PostgreSQL 15**.
-*   **Modèle de données** : La persistance est gérée par l'ORM **SQLAlchemy**, permettant de structurer les tables (Utilisateurs, Entreprises, Rendez-vous) via des objets Python.
-*   **Flux** : Le frontend (port 5173) consomme les ressources du backend (port 5000) via des services web standardisés.
+---
 
-## 3. Description de la solution
-*   **Fonctionnalités principales** : Recherche de prestataires, visualisation interactive des créneaux et gestion du profil utilisateur.
-*   **Rôle des composants** :
-    *   **React Router 7** : Gère la navigation fluide côté client sans rechargement de page.
-    *   **Flask API** : Assure la logique métier et la sécurité des accès aux données.
-*   **Services Web** : Exposition de points de terminaison (endpoints) pour la synchronisation en temps réel des réservations.
+## 2. Présentation de la Réalisation
+*   **Organisation support :** [Nom de votre organisation ou projet académique]
+*   **Intitulé :** **Book-By-Click (BBC)**
+*   **Période de réalisation :** [Dates]
+*   **Lieu :** [Établissement ou Entreprise]
 
-## 4. Preuve de développement professionnel
-*   **Gestion de versions** : Utilisation intensive de **Git** avec un historique de **153 commits**.
-*   **Collaboration** : Projet multi-contributeur impliquant **5 développeurs**.
-*   **Cycle de vie** : Évolution technologique marquée par l'intégration de versions très récentes des frameworks (React 19, Tailwind 4), prouvant une maintenance évolutive rigoureuse.
+---
 
-## 5. Maintenance corrective ou évolutive
-*   **Maintenance adaptative** : Développement de scripts de déploiement spécifiques pour chaque système d'exploitation (**install_Linux.sh** et **install_Windows.ps1**).
-*   **Qualité du code** : Mise en place d'**ESLint** pour l'analyse statique du code afin de prévenir les bugs de syntaxe et d'assurer l'homogénéité du code source.
+## 3. Compétences Travaillées (Bloc 2 - SLAM)
+*   **[X] Concevoir et développer une solution applicative** (Utilisation de frameworks modernes et services Web)
+*   **[X] Assurer la maintenance corrective ou évolutive** (Gestion des versions et corrections)
+*   **[X] Gérer les données** (Persistance avec PostgreSQL et SQLAlchemy)
 
-## 6. Base de données
-*   **Sécurisation** : Utilisation de **SQLAlchemy** pour prévenir les injections SQL et isolation de la base de données PostgreSQL dans un conteneur Docker dédié.
-*   **Environnement** : Exploitation de **PostgreSQL 15** pour sa gestion avancée de l'intégrité référentielle.
-*   **Sauvegardes** : Simulées via la gestion de volumes persistants dans la configuration **Docker Compose**.
+---
 
-## 7. Tests
-*   **Tests de qualité** : Configuration d'un environnement de linting avec **ESLint** pour garantir que le code respecte les standards de production.
-*   **Tests d'intégration** : Vérification de l'interopérabilité entre le Frontend (JavaScript) et le Backend (Python) via les scripts de démarrage automatisés.
-*   **Recommandations** : Pour une mise en production, le projet suggère l'utilisation de **TypeScript** pour renforcer la fiabilité via le typage statique.
+## 4. Conditions de Réalisation
+*   **Ressources fournies :** Cahier des charges du système de réservation en ligne, accès au dépôt GitHub.
+*   **Résultats attendus :** Une application fonctionnelle permettant aux clients de prendre rendez-vous avec des entreprises partenaires, stable dans l'environnement de production.
 
-## 8. Documentation technique
-*   **Installation rapide** :
-    1.  Clonage du dépôt GitHub.
-    2.  Frontend : `npm install`.
-    3.  Backend : `pip install -r requirements.txt` dans un environnement virtuel Python.
-*   **Exécution** : Commandes `npm run dev:lin` (Linux) ou `npm run dev:win` (Windows) pour lancer simultanément les services.
-*   **Déploiement** : Support complet pour **Docker**, facilitant l'orchestration des services via un fichier `docker-compose.yml`.
+---
 
-## 9. Documentation utilisateur
-*   **Prise en main** : Accès via `http://localhost:5173`.
-*   **Interface** : Navigation intuitive pour sélectionner une entreprise et "cliquer" pour réserver (Book-By-Click).
-*   **Support** : Une documentation détaillée est hébergée sur **GitHub Pages** pour guider les utilisateurs et les futurs développeurs.
+## 5. Description des Ressources Utilisées
+*   **Ressources documentaires :** Documentation technique BBC (Installation, API, Architecture).
+*   **Ressources matérielles :** Poste de travail (PC), Serveur de test/déploiement.
+*   **Ressources logicielles :**
+    *   **Frontend :** React 19, Vite, Tailwind CSS 4, React Router 7.
+    *   **Backend :** Flask (Python), SQLAlchemy (ORM).
+    *   **Base de données :** PostgreSQL 15.
+    *   **Infrastructure :** Docker, Docker Compose pour la conteneurisation.
+    *   **Outils :** Git/GitHub (153 commits), Scripts d'installation (`.sh`, `.ps1`).
 
-***
+---
 
-**Analogie pour retenir la structure :**
-Le projet est comme une **chaîne de montage automobile**. Le **Cahier des charges** est le plan du véhicule. La **Modélisation** est le châssis. Le **Développement (Git)** représente les 153 étapes de montage. Les **Tests (ESLint)** sont le contrôle qualité en fin de ligne, et **Docker** est le conteneur maritime qui permet de livrer la voiture n'importe où dans le monde sans qu'elle ne soit abîmée.
+## 6. Modalités d’Accès aux Productions
+*   **Dépôt distant :** [https://github.com/TISEPSE/Book-By-Click.git](https://github.com/TISEPSE/Book-By-Click.git).
+*   **Documentation en ligne :** [tisepse.github.io/Documentation-BBC/](https://tisepse.github.io/Documentation-BBC/).
+*   **Accès local :**
+    *   **Frontend :** `http://localhost:5173`
+    *   **Backend (API) :** `http://localhost:5000`
+
+---
+
+## 7. Descriptif de la Réalisation (Verso)
+
+### Architecture Technique
+La solution repose sur une architecture découplée. Le **Frontend** utilise **React 19** et **Vite** pour une interface utilisateur réactive. Le **Backend** est une API **Flask** qui communique avec une base de données **PostgreSQL** via l'ORM **SQLAlchemy**, garantissant une gestion structurée des données de réservation.
+
+### Productions Réalisées
+1.  **Interface de Réservation :** Composants React pour la prise de rendez-vous et la navigation via React Router 7.
+2.  **API REST :** Endpoints pour la gestion des utilisateurs, des entreprises et des créneaux.
+3.  **Gestion des Données :** Modélisation relationnelle et gestion de la persistance avec SQLAlchemy.
+4.  **Automatisation & Déploiement :** Création de scripts d'installation automatisés (`install_Linux.sh` et `install_Windows.ps1`) et configuration Docker.
+
+### Démarche de Maintenance et Qualité
+*   **Gestion des versions :** Suivi rigoureux du développement via GitHub (plus de 150 commits).
+*   **Tests :** Validation des endpoints de l'API et de la stabilité du système.
+*   **Documentation :** Rédaction d'un guide d'installation complet et d'une référence API pour faciliter l'évolution future du projet.
+
+---
+
+**Note pour l'examen :** Ce dossier doit être accompagné des schémas explicatifs (diagrammes de classes, MCD) et de la documentation utilisateur complète lors de la présentation orale.
+
+**Analogie :** Concevoir ce dossier technique, c'est comme fournir le **manuel d'entretien complet d'un véhicule** : vous décrivez non seulement les pièces utilisées (les technologies), mais aussi comment les assembler (l'installation) et comment s'assurer que le moteur continue de tourner sans panne (la maintenance et les tests).
