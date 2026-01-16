@@ -1,7 +1,5 @@
 # Architecture - Vue d'ensemble
 
-**Projet GitHub :** [https://github.com/TISEPSE/Book-By-Click.git](https://github.com/TISEPSE/Book-By-Click.git)
-
 ## Schéma global
 
 ```mermaid
