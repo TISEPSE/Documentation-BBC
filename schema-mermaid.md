@@ -8,29 +8,29 @@ flowchart TB
         A[("Navigateur")]
     end
 
-    subgraph FRONTEND["Frontend"]
-        B["React App - Port 5173"]
+    subgraph FRONTEND["Frontend - Docker"]
+        B["React 19 / Vite\nPort 5173"]
     end
 
-    subgraph BACKEND["Backend"]
-        C["Flask API - Port 5000"]
+    subgraph BACKEND["Backend - Docker"]
+        C["Flask API\nPort 5000"]
+        S["Swagger UI\n/swagger"]
     end
 
     subgraph DOCKER["Docker Services"]
-        D[("PostgreSQL 15 - Port 5432")]
-        E["Mail Server - Port 25"]
+        D[("PostgreSQL 15\nPort 5433 → 5432")]
     end
 
     A -->|"HTTP"| B
-    B -->|"REST API"| C
-    C -->|"SQL"| D
-    C -->|"SMTP"| E
+    B -->|"REST API /api/*"| C
+    C -->|"SQLAlchemy"| D
+    C --- S
 
     style A fill:#6366f1,stroke:#4f46e5,color:#fff
     style B fill:#06b6d4,stroke:#0891b2,color:#fff
     style C fill:#8b5cf6,stroke:#7c3aed,color:#fff
+    style S fill:#a78bfa,stroke:#7c3aed,color:#fff
     style D fill:#3b82f6,stroke:#2563eb,color:#fff
-    style E fill:#10b981,stroke:#059669,color:#fff
 
     style CLIENT fill:#1e1b4b,stroke:#4f46e5,color:#c7d2fe
     style FRONTEND fill:#164e63,stroke:#0891b2,color:#a5f3fc
@@ -40,14 +40,14 @@ flowchart TB
 
 ## Stack
 
-**Frontend:** React 19, Vite, React Router, TailwindCSS, Recharts
+**Frontend:** React 19, Vite (rolldown), React Router 7, TailwindCSS 4, Styled Components, Recharts, react-big-calendar, Lucide Icons, Heroicons
 
-**Backend:** Flask, SQLAlchemy, Flask-CORS
+**Backend:** Flask, Flask-SQLAlchemy, Flask-CORS, Flask-Swagger-UI, python-dotenv
 
 **Database:** PostgreSQL 15
 
-**Services Docker:** PostgreSQL (5432), Mail Server (25)
+**Services Docker:** PostgreSQL (5433), Backend Flask (5000), Frontend Vite (5173)
 
 ## Communication
 
-API REST en JSON sur `http://localhost:5000`
+API REST en JSON sur `http://localhost:5000/api/*`
